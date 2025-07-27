@@ -98,6 +98,23 @@ __definizione di baseline__
 
 definire una baseline significa determinare le condizioni "as-is" del sistema in modo da  o identificre regressioni futurepotere avere un confronto per i nostir miglioramenti
 
+
+__risks addressed throug performance testing__
+
+
+- processo fondamentale per mitigare determinati rischi di business e identificare aree di interese per quanto riguarda usabilità, funzionalità, sisicurezza che non è possibile ottenere in altro modo
+
+- speed related risk: legata ma non limitata alla soddisfazione degli utenti finali. altri esempi possono includere ad esmepio il consumo di dati e produzione di output entro un certo lasso di tempo o prima che i dati diventino obsoleti
+    - cercare di replicare per quanto possibile condizioni operative reali, ad esemio come si comporta il mio sistema se il carico avviene durante un aggiornamento o durante un backup?
+
+- scalability related risk: non solo legato al numero di utenti ma anche al variare di volume di dati processati.
+    - l'applicazioen rimane stabile per tutti gli utenti?
+    - l'applicazione è in grado di raccogliere tutti i dati del suo ciclo di vita?
+    - abbiamo modo di renderci conto se stiamo arrivando a capacity?
+    - funzionalità e  sicurezza vengono compromesse con un elevato carico?
+    - siamo in grado di gestire picchi nonpreviste?
+
+
 ------
 ## I Pilastri della misurazione: Metodologia e Segnali Chiave
 
