@@ -13,111 +13,95 @@ categories: ["Performance Engineering", "Software Testing"]
 
 ## Introduzione
 
-> cosa, come, perch
+> Cosa, come, perché
 
-__definizione__
+Il performance testing è un'attività fondamentale nel ciclo di vita dello sviluppo software, ma spesso sottovalutata o eseguita in modo non ottimale. In questa guida, esploreremo le fondamenta teoriche e pratiche necessarie per approcciare l'analisi delle performance in modo efficace, partendo dalla definizione e dagli obiettivi, fino ad arrivare ai metodi di misurazione più efficaci.
 
-- determinare responsivness, througput, reliability, scalability di un _sistema_ sotto un determinato workload
-    - sistema == diversi componenti che devono interagire, non possiamo prendere solamente una parte isolata. a volte potrebbe semplicemente "risolvere" un problema spostando il blocco in un altro sistema
+### Definizione
 
-__perchè misuriamo?__
+Il performance testing è il processo volto a determinare la responsività, il throughput, l'affidabilità e la scalabilità di un sistema sotto un determinato carico di lavoro. È importante sottolineare che il "sistema" si riferisce all'interazione di diversi componenti, e non a una singola parte isolata. A volte, un problema di performance potrebbe essere risolto semplicemente spostando il blocco problematico in un altro sottosistema.
 
-- le applicazioni non performanti generalmete non sono in grado di svolgere la funzione per cui erano state progettate/pensate
+### Perché misuriamo?
 
-- passo aggiuntivo agli operational acceptance test. questi si fermano a dire se l'applicazine funziona oppure no
+Le applicazioni non performanti generalmente non sono in grado di svolgere la funzione per cui erano state progettate o pensate. Il performance testing rappresenta un passo aggiuntivo rispetto agli operational acceptance test, i quali si limitano a verificare se l'applicazione funziona o meno.
 
-- cosa sono le performance? quando una applicazione è performante? Quando consente ad un utente di eseuguire un dato task senza _percepire_ delay o irritazione
+Ma cosa intendiamo per "performance"? Un'applicazione è performante quando consente a un utente di eseguire un dato task senza percepire ritardi o irritazione. Misurare le performance ci consente di:
 
-- eserre certi di essere pronti alla release
+* Essere certi di essere pronti alla release.
+* Verificare l'adeguatezza dell'infrastruttura: abbiamo abbastanza risorse? Il sistema rimane stabile?
+* Valutare diverse modalità di deployment: siamo certi che la configurazione più costosa ne valga davvero la pena?
+* Circoscrivere le ottimizzazioni: non ha senso ottimizzare elementi che non incidono realmente sulle metriche di interesse.
 
-- verificare adeguatezza dell'infrastruttura
-    - abbiamo abbastanza risorse? il sistema rimane stabile?
-    - valutare diverse modalità di deploy. siamo certi che quella configuraizone più costosa ne valga davvero la pena?
+### Cosa possiamo misurare?
 
-- circoscrivere le ottimizzazioni
-    - non ha senso ottimizzare elementi che non incidono realmente sulle metriche di interesse
+Le metriche chiave che possiamo misurare includono:
 
-__Cosa possiamo misurare?__
-- avaiability
-- response time
-- througput
-- utilization
-- scalability
+* Availability (Disponibilità)
+* Response Time (Tempo di Risposta)
+* Throughput (Portata)
+* Utilization (Utilizzo)
+* Scalability (Scalabilità)
 
-__Perché i problemi di performance esistono?__
+### Perché i problemi di performance esistono?
 
-- più tardi il problema di performance emerge, maggiore è il costo per risolverlo -> come molti altri problemi! anche in questo caso è necessario uno shift-left nella risoluzione del problema, così come accade per la security o altro
+Come per molti altri problemi nel software development, più tardi un problema di performance emerge, maggiore è il costo per risolverlo. È quindi necessario uno "shift-left" nella risoluzione di questi problemi, così come accade per la security o altre aree.
 
-- ma perché non si eseguono questi test __prima__?
-    - problemi culturali
-    - scarsa utilità percepita
-    - brutta developer experience? strumenti complessi, difficili da configurare?
+Ma perché questi test non vengono eseguiti prima? Le ragioni possono essere molteplici:
 
-__quali attività comprende?__
+* Problemi culturali
+* Scarsa utilità percepita
+* Brutta developer experience (strumenti complessi, difficili da configurare)
 
-1. identficare l'ambiente di test: con cosa dobbiamo lavorare?
-2. determinare gli acceptance criteria: come faccamo a sapere che abbiamo fatto bene?
-3. pianificare i test: quali sono gli scenari? assomigliano all'uso reale del prodotto? non ha senso eseguire test simulando milioni di utenti se abbiamo centinaia i utenti
-4. setup ambiente
-5.  implementazione dei test
-6. esecuzione
-7. analisi dei test
+### Quali attività comprende?
 
+Il processo di performance testing include diverse attività fondamentali:
 
-__Contesto di progetto__
+1.  Identificare l'ambiente di test: con cosa dobbiamo lavorare?
+2.  Determinare gli acceptance criteria: come facciamo a sapere che abbiamo fatto bene?
+3.  Pianificare i test: quali sono gli scenari? Assomigliano all'uso reale del prodotto? Non ha senso eseguire test simulando milioni di utenti se ne abbiamo solo centinaia.
+4.  Setup dell'ambiente
+5.  Implementazione dei test
+6.  Esecuzione
+7.  Analisi dei test
 
-di che cosa dobbiamo tenere conto quando definiamo dei test sulle performance? più che in altre tipologie di test il risultato non è bianco/nero ma deve essere inerpretato e il perimetro delineato. senza defnire il contesto del progetto è estremamene facile focalizzarsi su aree errate di analisi
+### Contesto di progetto
 
-- project vsion: la vision del progetto definisce il suo scopo ultimo, il suo stato desiderato futuro e consente di allineare le decisioni strategiche degli stakeholder
+Più che in altre tipologie di test, il risultato del performance testing non è bianco/nero ma deve essere interpretato e il perimetro delineato. Senza definire il contesto del progetto è estremamente facile focalizzarsi su aree errate di analisi. Dobbiamo tenere conto di:
 
-- scopo del sistema: se non sappiamo l'intento del sistema certamen non possiamo neanche ipotizzare le aree su cui mettere il focus
+* **Project Vision**: la vision del progetto definisce il suo scopo ultimo e il suo stato desiderato futuro, consentendo di allineare le decisioni strategiche degli stakeholder.
+* **Scopo del Sistema**: se non sappiamo l'intento del sistema, certamente non possiamo neanche ipotizzare le aree su cui mettere il focus.
+* **Aspettative degli Utenti**: mettersi nei panni degli utenti. La loro felicità non rispecchia per forza dei requisiti scritti su un foglio da un manager.
+* **Obiettivi di Business**: come per ogni altro progetto, rispettare tempi e budget.
+* **Motivo per cui vengono eseguiti i test**: possono variare durante le fasi di sviluppo, è importante saperli rimettere in discussione.
+* **Valore che i test portano al progetto**: sapere mappare i requisiti di business in appropriati test e determinare il valore che portano.
+* Gestione di progetto
+* Processi
+* Criteri di compliance
+* Schedule del progetto
 
-- aspettative degli utenti: mettersi nei panni degli utenti. la loro felicità non rispecchia per forza di cose dei requisiti scritti su un foglio da un manager
+### Tipologie di Test
 
-- obiettivi di business: come per ogni altro progetto, tenere rispettare tempi e budget
+Esistono diverse tipologie di performance test, ognuna con un obiettivo specifico:
 
-- motivo per cui vengono eseguiti i test: possono variare durante le fasi di sviluppo, importante sapre rimetterli in discussione
+* **Performance Testing**: determinare velocità, scalabilità e stabilità di un sistema. È importante capire tempi di risposta, throughput e utilizzo di risorse.
+* **Load Testing**: simulare un elevato carico sul sistema per vedere come si comporta rimanendo comunque nei limiti progettuali (stime iniziali sull'utilizzo).
+* **Stress Testing**: andare anche oltre le condizioni progettuali. Determinare cosa succede con poca memoria, spazio insufficiente, failure di server. L'importante è capire come e perché il sistema "schianta".
 
-- valore che i test portano al progetto: sapere mappare i requisiti di business in appropriati test e determianre il valore che portano
+### Definizione di Baseline
 
-- gestione di progetto: 
+Definire una baseline significa determinare le condizioni "as-is" del sistema in modo da poter avere un confronto per i nostri miglioramenti o identificare regressioni future.
 
-- processi:
+### Risks Addressed Through Performance Testing
 
-- criteri di compliance
+Il performance testing è un processo fondamentale per mitigare determinati rischi di business e identificare aree di interesse per quanto riguarda usabilità, funzionalità e sicurezza che non è possibile ottenere in altro modo.
 
-- schedule del progetto
-
-__tipologia di test__
-
-- performance: determinare valocità, scalabilità, stabilità di un sistema. importante capire tempi di risposta, througput, e utilizzo di risorse
-
-- load: simulare un elevato carico sul sistema per vedere come si comporta rimanendo comunque nei limiti progettuali (sitme iniziali sull'utilizzo)
-
-- stress testing: andre anche oltre alle condizioni progettuali. determinare cosa succede con poca memoria, paizo insufficiente, failure di server. L'importante è capire come e perché il sistema schiatta
-
-__definizione di baseline__
-
-definire una baseline significa determinare le condizioni "as-is" del sistema in modo da  o identificre regressioni futurepotere avere un confronto per i nostir miglioramenti
-
-
-__risks addressed throug performance testing__
-
-
-- processo fondamentale per mitigare determinati rischi di business e identificare aree di interese per quanto riguarda usabilità, funzionalità, sisicurezza che non è possibile ottenere in altro modo
-
-- speed related risk: legata ma non limitata alla soddisfazione degli utenti finali. altri esempi possono includere ad esmepio il consumo di dati e produzione di output entro un certo lasso di tempo o prima che i dati diventino obsoleti
-    - cercare di replicare per quanto possibile condizioni operative reali, ad esemio come si comporta il mio sistema se il carico avviene durante un aggiornamento o durante un backup?
-
-- scalability related risk: non solo legato al numero di utenti ma anche al variare di volume di dati processati.
-    - l'applicazioen rimane stabile per tutti gli utenti?
-    - l'applicazione è in grado di raccogliere tutti i dati del suo ciclo di vita?
-    - abbiamo modo di renderci conto se stiamo arrivando a capacity?
-    - funzionalità e  sicurezza vengono compromesse con un elevato carico?
-    - siamo in grado di gestire picchi nonpreviste?
-
-
-## Tassonomia dei test
+* **Speed Related Risk**: legata, ma non limitata, alla soddisfazione degli utenti finali. Altri esempi possono includere, ad esempio, il consumo di dati e la produzione di output entro un certo lasso di tempo o prima che i dati diventino obsoleti. Bisogna cercare di replicare per quanto possibile condizioni operative reali, ad esempio come si comporta il sistema se il carico avviene durante un aggiornamento o durante un backup.
+* **Scalability Related Risk**: non solo legato al numero di utenti ma anche al variare del volume di dati processati. Dobbiamo chiederci:
+    * L'applicazione rimane stabile per tutti gli utenti?
+    * L'applicazione è in grado di raccogliere tutti i dati del suo ciclo di vita?
+    * Abbiamo modo di renderci conto se stiamo arrivando alla capacità massima?
+    * Funzionalità e sicurezza vengono compromesse con un elevato carico?
+    * Siamo in grado di gestire picchi non previsti?
 
 ------
 
@@ -196,6 +180,8 @@ Il suo scopo è consentire di identificare in modo rapido i bottole neck del sis
 - saturazione: grado per cui le risorse sono sono in grado di gestire il carico 
 - errori: conteggio degli eventi di errore
 
+
+Le metriche raccolte da USE possono anche essere usate all'interno di un semplice diagramma di flusso per individuare i colli di bottiglia.
 ![use_metric_flow](imgs/usemethod_flow.png)
 
 #### Risorse
