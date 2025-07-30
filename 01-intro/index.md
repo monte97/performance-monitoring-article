@@ -4,9 +4,10 @@ date: 2025-07-26T10:00:00+02:00
 description: "Fondamenta teoriche e pratiche del performance testing: dalle metriche RED ai percentili, una guida completa per iniziare"
 menu:
     sidebar:
-        name: "Performance Testing Intro"
+        name: "Introduzione"
         identifier: "performance-testing-intro"
         weight: 10
+        parent: PERFT
 tags: ["Performance Testing", "Monitoring", "SRE", "Metrics", "Observability"]
 categories: ["Performance Engineering", "Software Testing"]
 ---
